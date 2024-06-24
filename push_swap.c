@@ -6,95 +6,97 @@
 /*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 13:34:32 by trischma          #+#    #+#             */
-/*   Updated: 2024/06/20 11:09:53 by trischma         ###   ########.fr       */
+/*   Updated: 2024/06/24 13:28:51 by trischma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	push_min_to_b(t_stack *a, t_stack *b, int min, int max)
+int is_sorted(t_stack *a, t_stack *b)
 {
-	int	i;
-	int	pushed;
+	int i;
 
-	pushed = 0;
-	i = a->size;
-	while (i > 0)
+	i = 0;
+	while (i < a->size - 1)
 	{
-		if (a->arr[0] >= min && a->arr[0] <= max)
+		if (a->arr[i] > a->arr[i + 1])
+			return (0);
+		i++;
+	}
+	if (b->size != 0)
+		return (0);
+	return (1);
+}
+
+void organize(t_stack *a, t_stack *b)
+{
+	int i;
+	int tmp;
+	int pos;
+
+	while (!is_sorted(a, b))
+	{
+		while (a->size > 3)
 		{
+			i = 1;
+			tmp = a->arr[0];
+			pos = 0;
+			while (i < a->size)
+			{
+				if (a->arr[i] < tmp)
+				{
+					tmp = a->arr[i];
+					pos = i;
+				}
+				i++;
+			}
+			if (pos >= a->size / 2)
+			{
+				while (pos < a->size)
+				{
+					rra(a);
+					pos++;
+				}
+			}
+			else
+			{
+				while (pos > 0)
+				{
+					rra(a);
+					pos--;
+				}
+			}
 			pb(a, b);
-			pushed++;
 		}
-		else
+		if (a->arr[0] > a->arr[1] && a->arr[0] > a->arr[2] && a->arr[1] > a->arr[2])
+		{
+			sa(a);
 			ra(a);
-		i--;
+		}
+		else if (a->arr[0] > a->arr[1] && a->arr[0] > a->arr[2] && a->arr[1] < a->arr[2])
+		{
+			ra(a);
+		}
+		else if (a->arr[0] > a->arr[1] && a->arr[0] < a->arr[2] && a->arr[1] < a->arr[2])
+		{
+			sa(a);
+		}
+		else if (a->arr[0] < a->arr[1] && a->arr[0] < a->arr[2] && a->arr[1] > a->arr[2])
+		{
+			sa(a);
+			ra(a);
+		}
+		else if (a->arr[0] < a->arr[1] && a->arr[0] > a->arr[2] && a->arr[1] > a->arr[2])
+		{
+			rra(a);
+		}
+		while (b->size > 0)
+		{
+			pa(a, b);
+		}
 	}
 }
 
-void	move_back_to_a(t_stack *a, t_stack *b)
-{
-	while (b->size > 0)
-	{
-		int max_index = 0;
-		for (int i = 1; i < b->size; i++)
-		{
-			if (b->arr[i] > b->arr[max_index])
-				max_index = i;
-		}
-		if (max_index <= b->size / 2)
-		{
-			while (max_index-- > 0)
-				rb(b);
-		}
-		else
-		{
-			max_index = b->size - max_index;
-			while (max_index-- > 0)
-				rrb(b);
-		}
-		pa(a, b);
-	}
-}
-
-void	organize(t_stack *a, t_stack *b)
-{
-	int	chunk_size = 20;
-	int min = 0;
-	int max = chunk_size;
-
-	while (a->size > 0)
-	{
-		push_min_to_b(a, b, min, max);
-		min += chunk_size;
-		max += chunk_size;
-	}
-	move_back_to_a(a, b);
-}
-
-
-// void	organize(t_stack *a, t_stack *b)
-// {
-// 	int	i;
-// 	int	tmp;
-
-// 	while (a->size != 0)
-// 	{
-// 		i = 1;
-// 		tmp = a->arr[0];
-// 		while (i < a->size)
-// 		{
-// 			if (tmp > a->arr[i])
-// 				tmp = a->arr[i];
-// 			i++;
-// 		}
-// 		while (tmp != a->arr[0])
-// 			ra(a);
-// 		pb(a, b);
-// 	}
-// 	while (b->size != 0)
-// 		pa(a, b);
-// }
 
 // void	organize(t_stack *a, t_stack *b)
 // {
@@ -202,5 +204,8 @@ int	main(int argc, char **argv)
 	if (!checker(&a, splited, i))
 		return (write(1, "Error\n", 6), freeing(&a, &b, splited), 1);
 	organize(&a, &b);
+	i = 0;
+	while (a.size > i)
+		printf("%d\n", a.arr[i++]);
 	return (freeing(&a, &b, splited), 0);
 }
