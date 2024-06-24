@@ -6,15 +6,56 @@
 /*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 13:34:32 by trischma          #+#    #+#             */
-/*   Updated: 2024/06/24 13:28:51 by trischma         ###   ########.fr       */
+/*   Updated: 2024/06/24 14:17:00 by trischma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int is_sorted(t_stack *a, t_stack *b)
+void	sort_rest(t_stack *a, t_stack *b)
 {
-	int i;
+	if (a->arr[0] > a->arr[1] && a->arr[0] > a->arr[2])
+	{
+		ra(a);
+	}
+	if (a->arr[0] > a->arr[1])
+	{
+		sa(a);
+	}
+	if (a->arr[1] > a->arr[2])
+	{
+		rra(a);
+		sa(a);
+		ra(a);
+	}
+	while (b->size > 0)
+		pa(a, b);
+}
+
+void	push_min_to_b(t_stack *a, t_stack *b, int pos)
+{
+	if (pos > a->size / 2)
+	{
+		while (pos < a->size)
+		{
+			rra(a);
+			pos++;
+		}
+	}
+	else
+	{
+		while (pos > 0)
+		{
+			ra(a);
+			pos--;
+		}
+	}
+	pb(a, b);
+}
+
+int	is_sorted(t_stack *a, t_stack *b)
+{
+	int	i;
 
 	i = 0;
 	while (i < a->size - 1)
@@ -28,11 +69,11 @@ int is_sorted(t_stack *a, t_stack *b)
 	return (1);
 }
 
-void organize(t_stack *a, t_stack *b)
+void	organize(t_stack *a, t_stack *b)
 {
-	int i;
-	int tmp;
-	int pos;
+	int	i;
+	int	tmp;
+	int	pos;
 
 	while (!is_sorted(a, b))
 	{
@@ -50,83 +91,11 @@ void organize(t_stack *a, t_stack *b)
 				}
 				i++;
 			}
-			if (pos >= a->size / 2)
-			{
-				while (pos < a->size)
-				{
-					rra(a);
-					pos++;
-				}
-			}
-			else
-			{
-				while (pos > 0)
-				{
-					rra(a);
-					pos--;
-				}
-			}
-			pb(a, b);
+			push_min_to_b(a, b, pos);
 		}
-		if (a->arr[0] > a->arr[1] && a->arr[0] > a->arr[2] && a->arr[1] > a->arr[2])
-		{
-			sa(a);
-			ra(a);
-		}
-		else if (a->arr[0] > a->arr[1] && a->arr[0] > a->arr[2] && a->arr[1] < a->arr[2])
-		{
-			ra(a);
-		}
-		else if (a->arr[0] > a->arr[1] && a->arr[0] < a->arr[2] && a->arr[1] < a->arr[2])
-		{
-			sa(a);
-		}
-		else if (a->arr[0] < a->arr[1] && a->arr[0] < a->arr[2] && a->arr[1] > a->arr[2])
-		{
-			sa(a);
-			ra(a);
-		}
-		else if (a->arr[0] < a->arr[1] && a->arr[0] > a->arr[2] && a->arr[1] > a->arr[2])
-		{
-			rra(a);
-		}
-		while (b->size > 0)
-		{
-			pa(a, b);
-		}
+		sort_rest(a, b);
 	}
 }
-
-
-// void	organize(t_stack *a, t_stack *b)
-// {
-// 	int	min_index;
-// 	int	i;
-
-// 	while (a->size > 0)
-// 	{
-// 		min_index = 0;
-// 		i = 0;
-// 		while (i < a->size)
-// 		{
-// 			if (a->arr[i] < a->arr[min_index])
-// 				min_index = i;
-// 			i++;
-// 		}
-// 		if (min_index <= a->size / 2)
-// 			while (min_index-- > 0)
-// 				ra(a);
-// 		else
-// 		{
-// 			min_index = a->size - min_index;
-// 			while (min_index-- > 0)
-// 				rra(a);
-// 		}
-// 		pb(a, b);
-// 	}
-// 	while (b->size > 0)
-// 		pa(a, b);
-// }
 
 int	checker(t_stack *a, char **splited, int i)
 {
