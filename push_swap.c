@@ -6,30 +6,37 @@
 /*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 13:34:32 by trischma          #+#    #+#             */
-/*   Updated: 2024/06/24 14:17:00 by trischma         ###   ########.fr       */
+/*   Updated: 2024/06/25 11:38:52 by trischma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	sort_rest(t_stack *a, t_stack *b)
+void sort_rest(t_stack *a, t_stack *b)
 {
-	if (a->arr[0] > a->arr[1] && a->arr[0] > a->arr[2])
-	{
-		ra(a);
-	}
-	if (a->arr[0] > a->arr[1])
-	{
-		sa(a);
-	}
-	if (a->arr[1] > a->arr[2])
-	{
-		rra(a);
-		sa(a);
-		ra(a);
-	}
-	while (b->size > 0)
-		pa(a, b);
+    if (a->size == 3)
+    {
+        if (a->arr[0] > a->arr[1] && a->arr[1] > a->arr[2])
+        {
+            sa(a);
+            rra(a);
+        }
+        else if (a->arr[0] > a->arr[1] && a->arr[0] > a->arr[2])
+            ra(a);
+        else if (a->arr[0] > a->arr[1])
+            sa(a);
+        else if (a->arr[1] > a->arr[2])
+        {
+            sa(a);
+            ra(a);
+        }
+        else if (a->arr[0] < a->arr[2] && a->arr[1] > a->arr[2])
+            rra(a);
+    }
+    else if (a->size == 2 && a->arr[0] > a->arr[1])
+        sa(a);
+    while (b->size > 0)
+        pa(a, b);
 }
 
 void	push_min_to_b(t_stack *a, t_stack *b, int pos)
@@ -173,8 +180,8 @@ int	main(int argc, char **argv)
 	if (!checker(&a, splited, i))
 		return (write(1, "Error\n", 6), freeing(&a, &b, splited), 1);
 	organize(&a, &b);
-	i = 0;
-	while (a.size > i)
-		printf("%d\n", a.arr[i++]);
+	// i = 0;
+	// while (a.size > i)
+	// 	printf("%d\n", a.arr[i++]);
 	return (freeing(&a, &b, splited), 0);
 }
