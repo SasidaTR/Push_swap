@@ -6,11 +6,11 @@
 /*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 13:09:30 by trischma          #+#    #+#             */
-/*   Updated: 2024/06/10 13:57:23 by trischma         ###   ########.fr       */
+/*   Updated: 2024/06/25 11:46:12 by trischma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
+#include "../include/push_swap.h"
 
 void	*ft_memcpy(void *dest, const void *src, size_t n)
 {

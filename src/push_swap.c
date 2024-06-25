@@ -6,37 +6,37 @@
 /*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 13:34:32 by trischma          #+#    #+#             */
-/*   Updated: 2024/06/25 11:38:52 by trischma         ###   ########.fr       */
+/*   Updated: 2024/06/25 11:44:45 by trischma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../include/push_swap.h"
 
-void sort_rest(t_stack *a, t_stack *b)
+void	sort_rest(t_stack *a, t_stack *b)
 {
-    if (a->size == 3)
-    {
-        if (a->arr[0] > a->arr[1] && a->arr[1] > a->arr[2])
-        {
-            sa(a);
-            rra(a);
-        }
-        else if (a->arr[0] > a->arr[1] && a->arr[0] > a->arr[2])
-            ra(a);
-        else if (a->arr[0] > a->arr[1])
-            sa(a);
-        else if (a->arr[1] > a->arr[2])
-        {
-            sa(a);
-            ra(a);
-        }
-        else if (a->arr[0] < a->arr[2] && a->arr[1] > a->arr[2])
-            rra(a);
-    }
-    else if (a->size == 2 && a->arr[0] > a->arr[1])
-        sa(a);
-    while (b->size > 0)
-        pa(a, b);
+	if (a->size == 3)
+	{
+		if (a->arr[0] > a->arr[1] && a->arr[1] > a->arr[2])
+		{
+			sa(a);
+			rra(a);
+		}
+		else if (a->arr[0] > a->arr[1] && a->arr[0] > a->arr[2])
+			ra(a);
+		else if (a->arr[0] > a->arr[1])
+			sa(a);
+		else if (a->arr[1] > a->arr[2])
+		{
+			sa(a);
+			ra(a);
+		}
+		else if (a->arr[0] < a->arr[2] && a->arr[1] > a->arr[2])
+			rra(a);
+	}
+	else if (a->size == 2 && a->arr[0] > a->arr[1])
+		sa(a);
+	while (b->size > 0)
+		pa(a, b);
 }
 
 void	push_min_to_b(t_stack *a, t_stack *b, int pos)

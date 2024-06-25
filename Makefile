@@ -1,6 +1,6 @@
 NAME = push_swap
 
-SRC = $(wildcard *.c) $(wildcard libft/*.c) $(wildcard utils/*.c)
+SRC = $(wildcard src/*.c) $(wildcard libft/*.c) $(wildcard utils/*.c)
 OBJ = $(SRC:.c=.o)
 
 CFLAGS = -Wall -Wextra -Werror

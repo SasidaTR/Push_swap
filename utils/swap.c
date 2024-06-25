@@ -6,11 +6,11 @@
 /*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:43:10 by trischma          #+#    #+#             */
-/*   Updated: 2024/06/20 11:05:53 by trischma         ###   ########.fr       */
+/*   Updated: 2024/06/25 11:46:34 by trischma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
+#include "../include/push_swap.h"
 
 void	sa(t_stack *a)
 {

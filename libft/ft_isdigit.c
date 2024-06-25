@@ -6,11 +6,11 @@
 /*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 14:30:13 by trischma          #+#    #+#             */
-/*   Updated: 2024/06/10 13:57:21 by trischma         ###   ########.fr       */
+/*   Updated: 2024/06/25 11:46:09 by trischma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
+#include "../include/push_swap.h"
 
 int	ft_isdigit(const char *str)
 {

@@ -6,7 +6,7 @@
 /*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:11:59 by trischma          #+#    #+#             */
-/*   Updated: 2024/06/12 17:30:19 by trischma         ###   ########.fr       */
+/*   Updated: 2024/06/25 11:42:58 by trischma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,14 @@ typedef struct s_stack
 	int	size;
 }	t_stack;
 
+//Libft
 int		ft_atoi(const char *str);
 int		ft_isdigit(const char *str);
 char	**ft_split(char const *s, char c);
 char	*ft_strjoin(int argc, char **argv);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
 size_t	ft_strlen(const char *s);
-char	**prepare(int argc, char **argv);
+
 void	sa(t_stack *a);
 void	sb(t_stack *b);
 void	ss(t_stack *a, t_stack *b);

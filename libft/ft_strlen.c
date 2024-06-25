@@ -6,11 +6,11 @@
 /*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 13:09:30 by trischma          #+#    #+#             */
-/*   Updated: 2024/06/18 10:17:13 by trischma         ###   ########.fr       */
+/*   Updated: 2024/06/25 11:46:22 by trischma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
+#include "../include/push_swap.h"
 
 size_t	ft_strlen(const char *s)
 {

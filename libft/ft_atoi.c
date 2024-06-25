@@ -6,11 +6,11 @@
 /*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 13:30:22 by trischma          #+#    #+#             */
-/*   Updated: 2024/06/10 13:57:19 by trischma         ###   ########.fr       */
+/*   Updated: 2024/06/25 11:45:56 by trischma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
+#include "../include/push_swap.h"
 
 int	ft_atoi(const char *str)
 {
