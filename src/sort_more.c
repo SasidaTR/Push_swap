@@ -6,7 +6,7 @@
 /*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 12:38:27 by trischma          #+#    #+#             */
-/*   Updated: 2024/06/25 17:15:56 by trischma         ###   ########.fr       */
+/*   Updated: 2024/06/25 17:47:30 by trischma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,78 +47,47 @@ void	push_min_from_a(t_stack *a, t_stack *b, t_pos *pos)
 		}
 	}
 	pb(a, b);
+	if (b->size > 1 && b->arr[0] > b->arr[1])
+		sb(b);
 }
 
-t_pos	find_value(t_stack *a, t_stack *b)
-{
-	t_pos	pos;
-	int		i;
-	int		j;
+	t_pos	find_value(t_stack *a, t_stack *b)
+	{
+		t_pos	pos;
+		int		i;
+		int		j;
 
-	pos.posA = 0;
-	pos.posB = 0;
-	i = 0;
-	while (i < 5 && i < a->size)
-	{
-		j = 0;
-		while (j < 5 && j < b->size)
+		pos.posA = 0;
+		pos.posB = 0;
+		i = 0;
+		while (i < a->size)
 		{
-			if (a->arr[i] - b->arr[j] < a->arr[pos.posA] - b->arr[pos.posB])
+			j = 0;
+			while (j < b->size)
 			{
-				pos.posA = i;
-				pos.posB = j;
+				if (a->arr[i] < a->arr[pos.posA] || 
+					(a->arr[i] == a->arr[pos.posA] && b->arr[j] < b->arr[pos.posB]))
+				{
+					pos.posA = i;
+					pos.posB = j;
+				}
+				j++;
 			}
-			j++;
+			i++;
 		}
-		j = b->size - 5;
-		while (j < b->size && j >= 0)
-		{
-			if (a->arr[i] - b->arr[j] < a->arr[pos.posA] - b->arr[pos.posB])
-			{
-				pos.posA = i;
-				pos.posB = j;
-			}
-			j++;
-		}
-		i++;
+		return (pos);
 	}
-	i = a->size - 5;
-	while (i < a->size && i >= 0)
-	{
-		j = 0;
-		while (j < 5 && j < b->size)
-		{
-			if (a->arr[i] - b->arr[j] < a->arr[pos.posA] - b->arr[pos.posB])
-			{
-				pos.posA = i;
-				pos.posB = j;
-			}
-			j++;
-		}
-		j = b->size - 5;
-		while (j < b->size && j >= 0)
-		{
-			if (a->arr[i] - b->arr[j] < a->arr[pos.posA] - b->arr[pos.posB])
-			{
-				pos.posA = i;
-				pos.posB = j;
-			}
-			j++;
-		}
-		i++;
-	}
-	return (pos);
-}
 
 void	organize_more(t_stack *a, t_stack *b)
 {
+	t_pos pos;
 	pb(a, b);
 	pb(a, b);
 	if (b->arr[0] < b->arr[1])
-		rb(b);
+		sb(b);
 	while (a->size > 0)
 	{
-		t_pos pos = find_value(a, b);
+		pos = find_value(a, b);
 		push_min_from_a(a, b, &pos);
 	}
 	while (b->size > 0)
