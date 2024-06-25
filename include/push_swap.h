@@ -6,7 +6,7 @@
 /*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:11:59 by trischma          #+#    #+#             */
-/*   Updated: 2024/06/25 11:42:58 by trischma         ###   ########.fr       */
+/*   Updated: 2024/06/25 16:13:05 by trischma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@ typedef struct s_stack
 	int	*arr;
 	int	size;
 }	t_stack;
+
+typedef struct s_pos
+{
+	int	posA;
+	int	posB;
+}	t_pos;
 
 //Libft
 int		ft_atoi(const char *str);
@@ -42,5 +48,8 @@ void	rr(t_stack *a, t_stack *b);
 void	rra(t_stack *a);
 void	rrb(t_stack *b);
 void	rrr(t_stack *a, t_stack *b);
+
+void	organize_less(t_stack *a, t_stack *b);
+void	organize_more(t_stack *a, t_stack *b);
 
 #endif
