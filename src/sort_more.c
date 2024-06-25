@@ -6,20 +6,20 @@
 /*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 12:38:27 by trischma          #+#    #+#             */
-/*   Updated: 2024/06/25 16:52:01 by trischma         ###   ########.fr       */
+/*   Updated: 2024/06/25 17:15:56 by trischma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/push_swap.h"
 
-void	push_min_to_b(t_stack *a, t_stack *b, t_pos *pos)
+void	push_min_from_a(t_stack *a, t_stack *b, t_pos *pos)
 {
 	if (pos->posA > a->size / 2)
 	{
 		while (pos->posA < a->size)
 		{
 			rra(a);
-			pos++;
+			pos->posA++;
 		}
 	}
 	else
@@ -27,15 +27,15 @@ void	push_min_to_b(t_stack *a, t_stack *b, t_pos *pos)
 		while (pos->posA > 0)
 		{
 			ra(a);
-			pos--;
+			pos->posA--;
 		}
 	}
-	if (pos->posB > a->size / 2)
+	if (pos->posB > b->size / 2)
 	{
-		while (pos->posA < a->size)
+		while (pos->posB < b->size)
 		{
 			rrb(b);
-			pos++;
+			pos->posB++;
 		}
 	}
 	else
@@ -43,17 +43,17 @@ void	push_min_to_b(t_stack *a, t_stack *b, t_pos *pos)
 		while (pos->posB > 0)
 		{
 			rb(b);
-			pos--;
+			pos->posB--;
 		}
 	}
 	pb(a, b);
 }
 
-t_pos	*find_value(t_stack *a, t_stack *b)
+t_pos	find_value(t_stack *a, t_stack *b)
 {
+	t_pos	pos;
 	int		i;
 	int		j;
-	t_pos	pos;
 
 	pos.posA = 0;
 	pos.posB = 0;
@@ -107,7 +107,7 @@ t_pos	*find_value(t_stack *a, t_stack *b)
 		}
 		i++;
 	}
-	return (&pos);
+	return (pos);
 }
 
 void	organize_more(t_stack *a, t_stack *b)
@@ -117,7 +117,10 @@ void	organize_more(t_stack *a, t_stack *b)
 	if (b->arr[0] < b->arr[1])
 		rb(b);
 	while (a->size > 0)
-		push_min_to_b(a, b, find_value(a, b));
+	{
+		t_pos pos = find_value(a, b);
+		push_min_from_a(a, b, &pos);
+	}
 	while (b->size > 0)
 		pa(a, b);
 }
