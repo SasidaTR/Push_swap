@@ -6,105 +6,104 @@
 /*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 11:35:17 by trischma          #+#    #+#             */
-/*   Updated: 2024/06/26 16:28:24 by trischma         ###   ########.fr       */
+/*   Updated: 2024/06/26 17:38:11 by trischma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/push_swap.h"
 
-void	push_min_from_a(t_stack *a, t_stack *b, int posA, int posB)
+void	push_min_from_a(t_stack *a, t_stack *b, int posa, int posb)
 {
-	if (posA > a->size / 2)
+	while (posa != 0)
 	{
-		while (posA < a->size)
+		if (posa > a->size / 2)
 		{
 			rra(a);
-			posA++;
+			posa++;
+			if (posa == a->size)
+				posa = 0;
 		}
-	}
-	else
-	{
-		while (posA > 0)
+		else
 		{
 			ra(a);
-			posA--;
+			posa--;
 		}
 	}
-	if (posB > b->size / 2)
+	while (posb != 0)
 	{
-		while (posB < b->size)
+		if (posb > b->size / 2)
 		{
 			rrb(b);
-			posB++;
+			posb++;
+			if (posb == b->size)
+				posb = 0;
 		}
-	}
-	else
-	{
-		while (posB > 0)
+		else
 		{
 			rb(b);
-			posB--;
+			posb--;
 		}
 	}
 	pb(a, b);
 }
 
-void	find_value(t_stack *a, t_stack *b, int *posA, int *posB)
+void	find_value(t_stack *a, t_stack *b, int *posa, int *posb)
 {
-	int i = 0;
-	int j;
+	int	i;
+	int	j;
 
+	i = 0;
 	while (i < a->size)
 	{
 		j = 0;
 		while (j < b->size)
 		{
-			if ((b->arr[j] > a->arr[i] && b->arr[(j + 1) % b->size] < a->arr[i]) ||
-				(b->arr[j] > a->arr[i] && j == b->size - 1))
+			if ((b->arr[j] > a->arr[i] && b->arr[(j + 1) % b->size] < a->arr[i])
+				|| (b->arr[j] > a->arr[i] && j == b->size - 1))
 			{
-				*posA = i;
-				*posB = (j + 1) % b->size;
-				return;
+				*posa = i;
+				*posb = (j + 1) % b->size;
+				return ;
 			}
 			j++;
 		}
 		i++;
 	}
-	*posA = 0;
-	*posB = 0;
 }
 
 void	organize_more(t_stack *a, t_stack *b)
 {
-	int i;
-	int	posA;
-	int	posB;
+	int	i;
+	int	posa;
+	int	posb;
 
-	i = 1;
-	posA = 0;
-	posB = 0;
-	while (i < a->size)
-	{
-		if (a->arr[i] < a->arr[posA])
-			posA = i;
-		i++;
-	}
-	push_min_from_a(a, b, posA, posB);
-	i = 1;
-	while (i < a->size)
-	{
-		if (a->arr[i] > a->arr[posA])
-			posA = i;
-		i++;
-	}
-	push_min_from_a(a, b, posA, posB);
+	i = 0;
+	posa = 0;
+	posb = 0;
+	while (++i < a->size)
+		if (a->arr[i] < a->arr[posa])
+			posa = i;
+	push_min_from_a(a, b, posa, posb);
+	i = 0;
+	posa = 0;
+	while (++i < a->size)
+		if (a->arr[i] > a->arr[posa])
+			posa = i;
+	push_min_from_a(a, b, posa, posb);
 	while (a->size > 0)
 	{
-		find_value(a, b, &posA, &posB);
-		push_min_from_a(a, b, posA, posB);
+		find_value(a, b, &posa, &posb);
+		push_min_from_a(a, b, posa, posb);
 	}
 	while (b->size > 0)
 		pa(a, b);
-	while (!is_sorted(a, b))
-		rra(a);
+	i = 0;
+	while (a->arr[i] > a->arr[i + 1])
+		i++;
+	if (i < a->size / 2)
+		while (!is_sorted(a, b))
+			ra(a);
+	else
+		while (!is_sorted(a, b))
+			rra(a);
 }
