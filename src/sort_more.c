@@ -6,7 +6,7 @@
 /*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 11:35:17 by trischma          #+#    #+#             */
-/*   Updated: 2024/06/26 15:13:29 by trischma         ###   ########.fr       */
+/*   Updated: 2024/06/26 16:18:37 by trischma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,64 +51,56 @@ void	push_min_from_a(t_stack *a, t_stack *b, int posA, int posB)
 
 void	find_value(t_stack *a, t_stack *b, int *posA, int *posB)
 {
-	int	i;
-	int	j;
-	int k;
-	int l;
+	int i, j;
 
-	i = -5;
-	while (i < 4 || i + 5 > a->size)
+	for (i = 0; i < a->size; i++)
 	{
-		if (a->size < 10)
-			k = i + 5;
-		else if (i <= 0)
-			k = a->size + i;
-		else
-			k = i;
-		j = -5;
-		while (j < 4 || j + 5 < b->size)
+		for (j = 0; j < b->size; j++)
 		{
-			if (b->size < 10)
-				l = j + 5;
-			else if (j <= 0)
-				l = b->size + j;
-			else
-				l = j;
-			if (a->arr[k] > b->arr[b->size] && a->arr[k] < b->arr[0])
+			if ((b->arr[j] > a->arr[i] && b->arr[(j + 1) % b->size] < a->arr[i]) ||
+				(b->arr[j] > a->arr[i] && j == b->size - 1))
 			{
-				*posA = k;
-				*posB = 0;
-				return ;
+				*posA = i;
+				*posB = (j + 1) % b->size;
+				return;
 			}
-			if (a->arr[k] > b->arr[l - 1] && a->arr[k] < b->arr[l])
-			{
-				*posA = k;
-				*posB = l;
-				return ;
-			}
-			j++;
 		}
-		i++;
 	}
+	*posA = 0;
+	*posB = 0;
 }
 
 void	organize_more(t_stack *a, t_stack *b)
 {
+	int i;
 	int	posA;
 	int	posB;
 
+	i = 1;
 	posA = 0;
 	posB = 0;
-	pb(a, b);
-	pb(a, b);
-	if (b->arr[0] < b->arr[1])
-		sb(b);
+	while (i < a->size)
+	{
+		if (a->arr[i] < a->arr[posA])
+			posA = i;
+		i++;
+	}
+	push_min_from_a(a, b, posA, posB);
+	i = 1;
+	while (i < a->size)
+	{
+		if (a->arr[i] > a->arr[posA])
+			posA = i;
+		i++;
+	}
+	push_min_from_a(a, b, posA, posB);
 	while (a->size > 0)
 	{
 		find_value(a, b, &posA, &posB);
-		printf("posA: %d, posB: %d\n", posA, posB);
 		push_min_from_a(a, b, posA, posB);
 	}
 	while (b->size > 0)
 		pa(a, b);
+	while (!is_sorted(a, b))
+		rra(a);
 }
