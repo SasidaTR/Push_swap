@@ -6,7 +6,7 @@
 /*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 11:35:17 by trischma          #+#    #+#             */
-/*   Updated: 2024/06/26 16:18:37 by trischma         ###   ########.fr       */
+/*   Updated: 2024/06/26 16:28:24 by trischma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,13 @@ void	push_min_from_a(t_stack *a, t_stack *b, int posA, int posB)
 
 void	find_value(t_stack *a, t_stack *b, int *posA, int *posB)
 {
-	int i, j;
+	int i = 0;
+	int j;
 
-	for (i = 0; i < a->size; i++)
+	while (i < a->size)
 	{
-		for (j = 0; j < b->size; j++)
+		j = 0;
+		while (j < b->size)
 		{
 			if ((b->arr[j] > a->arr[i] && b->arr[(j + 1) % b->size] < a->arr[i]) ||
 				(b->arr[j] > a->arr[i] && j == b->size - 1))
@@ -64,7 +66,9 @@ void	find_value(t_stack *a, t_stack *b, int *posA, int *posB)
 				*posB = (j + 1) % b->size;
 				return;
 			}
+			j++;
 		}
+		i++;
 	}
 	*posA = 0;
 	*posB = 0;
