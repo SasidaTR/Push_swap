@@ -6,7 +6,7 @@
 /*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 11:35:17 by trischma          #+#    #+#             */
-/*   Updated: 2024/06/27 17:11:35 by trischma         ###   ########.fr       */
+/*   Updated: 2024/06/27 17:19:59 by trischma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,15 @@ int	find_value(t_stack *a, t_stack *b, int *posa, int *posb, int i)
 	int	j;
 	int	k;
 
-	j = 0;
-	while (j < i && j < a->size)
+	j = a->size - i;
+	while (j < a->size + i)
 	{
-		k = 0;
-		while (k < i && k < b->size)
+		k = b->size - i;
+		while (k < b->size + i)
 		{
-			if ((b->arr[k % b->size] > a->arr[j % a->size] && b->arr[(k + 1) % b->size] < a->arr[j % a->size])
-				|| (b->arr[k] > a->arr[j] && k == b->size - 1))
+			if (b->arr[k % b->size] > a->arr[j % a->size] && b->arr[(k + 1) % b->size] < a->arr[j % a->size])
 			{
-				*posa = j;
+				*posa = j % a->size;
 				*posb = (k + 1) % b->size;
 				return (1);
 			}
