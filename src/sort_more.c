@@ -6,7 +6,7 @@
 /*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 11:35:17 by trischma          #+#    #+#             */
-/*   Updated: 2024/06/27 12:59:09 by trischma         ###   ########.fr       */
+/*   Updated: 2024/06/27 16:13:06 by trischma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	push_min_from_a(t_stack *a, t_stack *b, int posa, int posb)
 	pb(a, b);
 }
 
-int	find_value(t_stack *a, t_stack *b, int *posa, int *posb, int i)
+void	find_value(t_stack *a, t_stack *b, int *posa, int *posb, int i)
 {
 	int	j;
 	int	k;
@@ -58,18 +58,17 @@ int	find_value(t_stack *a, t_stack *b, int *posa, int *posb, int i)
 		k = 0;
 		while (k < i && k < b->size)
 		{
-			if ((b->arr[k] > a->arr[j] && b->arr[(k + 1) % b->size] < a->arr[j])
+			if ((b->arr[k % b->size] > a->arr[j % b->size] && b->arr[(k + 1) % b->size] < a->arr[j % b->size])
 				|| (b->arr[k] > a->arr[j] && k == b->size - 1))
 			{
 				*posa = j;
 				*posb = (k + 1) % b->size;
-				return (1);
+				return ;
 			}
 			k++;
 		}
 		j++;
 	}
-	return (0);
 }
 
 void	organize_more(t_stack *a, t_stack *b)
@@ -91,11 +90,9 @@ void	organize_more(t_stack *a, t_stack *b)
 		if (a->arr[i] > a->arr[posa])
 			posa = i;
 	push_min_from_a(a, b, posa, posb);
-	i = 0;
 	while (a->size > 0)
 	{
-		while (!find_value(a, b, &posa, &posb, i))
-			i++;
+		find_value(a, b, &posa, &posb, i);
 		push_min_from_a(a, b, posa, posb);
 	}
 	while (b->size > 0)
