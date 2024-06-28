@@ -6,7 +6,7 @@
 /*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 11:35:17 by trischma          #+#    #+#             */
-/*   Updated: 2024/06/27 17:19:59 by trischma         ###   ########.fr       */
+/*   Updated: 2024/06/28 15:49:53 by trischma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,39 @@ int	find_value(t_stack *a, t_stack *b, int *posa, int *posb, int i)
 {
 	int	j;
 	int	k;
+	int	min;
+	int	max;
 
+	j = 0;
+	min = 0;
+	while (++j < b->size)
+		if (b->arr[min] > b->arr[j])
+			min = j;
+	k = 0;
+	max = 0;
+	while (++k < b->size)
+		if (b->arr[max] < b->arr[k])
+			max = k;
 	j = a->size - i;
 	while (j < a->size + i)
 	{
 		k = b->size - i;
 		while (k < b->size + i)
 		{
-			if (b->arr[k % b->size] > a->arr[j % a->size] && b->arr[(k + 1) % b->size] < a->arr[j % a->size])
+			if (a->arr[j % a->size] < b->arr[min % b->size])
+			{
+				*posa = j % a->size;
+				*posb = (min + 1) % b->size;
+				return (1);
+			}
+			if (a->arr[j % a->size] > b->arr[max % b->size])
+			{
+				*posa = j % a->size;
+				*posb = max % b->size;
+				return (1);
+			}
+			if (b->arr[k % b->size] > a->arr[j % a->size]
+				&& b->arr[(k + 1) % b->size] < a->arr[j % a->size])
 			{
 				*posa = j % a->size;
 				*posb = (k + 1) % b->size;
@@ -67,6 +92,25 @@ int	find_value(t_stack *a, t_stack *b, int *posa, int *posb, int i)
 			k++;
 		}
 		j++;
+	}
+	if (i > a->size / 2)
+	{
+		j = 0;
+		while (j < a->size)
+		{
+			k = 0;
+			while (k < b->size)
+			{
+				if (b->arr[k % b->size] > a->arr[j % a->size]
+					&& b->arr[(k + 1) % b->size] < a->arr[j % a->size])
+				{
+					*posa = j % a->size;
+					*posb = (k + 1) % b->size;
+					return (1);
+				}
+				k++;
+			}
+		}
 	}
 	return (0);
 }
@@ -80,16 +124,10 @@ void	organize_more(t_stack *a, t_stack *b)
 	i = 0;
 	posa = 0;
 	posb = 0;
-	while (++i < a->size)
-		if (a->arr[i] < a->arr[posa])
-			posa = i;
-	push_min_from_a(a, b, posa, posb);
-	i = 0;
-	posa = 0;
-	while (++i < a->size)
-		if (a->arr[i] > a->arr[posa])
-			posa = i;
-	push_min_from_a(a, b, posa, posb);
+	pb(a, b);
+	pb(a, b);
+	if (b->arr[0] < b->arr[1])
+		sb(b);
 	while (a->size > 0)
 	{
 		i = 0;
