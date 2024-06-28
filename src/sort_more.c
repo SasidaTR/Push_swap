@@ -6,45 +6,35 @@
 /*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 11:35:17 by trischma          #+#    #+#             */
-/*   Updated: 2024/06/28 15:49:53 by trischma         ###   ########.fr       */
+/*   Updated: 2024/06/28 16:37:04 by trischma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/push_swap.h"
 
-void	push_min_from_a(t_stack *a, t_stack *b, int posa, int posb)
+void	push_min_from_a(t_stack *ab, int posab, int x)
 {
-	while (posa != 0)
+	while (posab != 0)
 	{
-		if (posa > a->size / 2)
+		if (posab > ab->size / 2)
 		{
-			rra(a);
-			posa++;
-			if (posa == a->size)
-				posa = 0;
+			if (x == 1)
+				rra(ab);
+			else
+				rrb(ab);
+			posab++;
+			if (posab == ab->size)
+				posab = 0;
 		}
 		else
 		{
-			ra(a);
-			posa--;
+			if (x == 1)
+				ra(ab);
+			else
+				rb(ab);
+			posab--;
 		}
 	}
-	while (posb != 0)
-	{
-		if (posb > b->size / 2)
-		{
-			rrb(b);
-			posb++;
-			if (posb == b->size)
-				posb = 0;
-		}
-		else
-		{
-			rb(b);
-			posb--;
-		}
-	}
-	pb(a, b);
 }
 
 int	find_value(t_stack *a, t_stack *b, int *posa, int *posb, int i)
@@ -133,7 +123,9 @@ void	organize_more(t_stack *a, t_stack *b)
 		i = 0;
 		while (!find_value(a, b, &posa, &posb, i))
 			i++;
-		push_min_from_a(a, b, posa, posb);
+		push_min_from_a(a, posa, 1);
+		push_min_from_a(b, posb, 2);
+		pb(a, b);
 	}
 	while (b->size > 0)
 		pa(a, b);
