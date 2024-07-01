@@ -6,7 +6,7 @@
 /*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 13:34:32 by trischma          #+#    #+#             */
-/*   Updated: 2024/06/27 17:21:48 by trischma         ###   ########.fr       */
+/*   Updated: 2024/07/01 14:24:08 by trischma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,5 @@ int	main(int argc, char **argv)
 	if (!checker(&a, splited, i))
 		return (write(1, "Error\n", 6), freeing(&a, &b, splited), 1);
 	how_many(&a, &b);
-	i = 0;
-	while (a.size > i)
-		printf("%d\n", a.arr[i++]);
 	return (freeing(&a, &b, splited), 0);
 }

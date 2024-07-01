@@ -6,7 +6,7 @@
 /*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 11:49:31 by trischma          #+#    #+#             */
-/*   Updated: 2024/06/25 15:43:19 by trischma         ###   ########.fr       */
+/*   Updated: 2024/07/01 14:45:44 by trischma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,25 +39,29 @@ void	sort_rest(t_stack *a, t_stack *b)
 		pa(a, b);
 }
 
-void	push_min_to_b(t_stack *a, t_stack *b, int pos)
+void	get_in_line(t_stack *ab, int posab, int x)
 {
-	if (pos > a->size / 2)
+	while (posab != 0)
 	{
-		while (pos < a->size)
+		if (posab > ab->size / 2)
 		{
-			rra(a);
-			pos++;
+			if (x == 1)
+				rra(ab);
+			else
+				rrb(ab);
+			posab++;
+			if (posab == ab->size)
+				posab = 0;
+		}
+		else
+		{
+			if (x == 1)
+				ra(ab);
+			else
+				rb(ab);
+			posab--;
 		}
 	}
-	else
-	{
-		while (pos > 0)
-		{
-			ra(a);
-			pos--;
-		}
-	}
-	pb(a, b);
 }
 
 int	is_sorted(t_stack *a, t_stack *b)
@@ -93,7 +97,8 @@ void	organize_less(t_stack *a, t_stack *b)
 					pos = i;
 				i++;
 			}
-			push_min_to_b(a, b, pos);
+			get_in_line(a, pos, 1);
+			pb(a, b);
 		}
 		sort_rest(a, b);
 	}
