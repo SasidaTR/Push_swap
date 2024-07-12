@@ -17,6 +17,14 @@
 # include <stdlib.h>
 # include <stdio.h>
 
+typedef struct s_values
+{
+	int	min;
+	int max;
+	int posa;
+	int posb;
+}	t_values;
+
 typedef struct s_stack
 {
 	int	*arr;

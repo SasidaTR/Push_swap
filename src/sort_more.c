@@ -12,7 +12,7 @@
 
 #include "../include/push_swap.h"
 
-void	otherwise(t_stack *a, t_stack *b, int *posa, int *posb)
+void	otherwise(t_stack *a, t_stack *b, t_values *values)
 {
 	int	j;
 	int	k;
@@ -26,8 +26,8 @@ void	otherwise(t_stack *a, t_stack *b, int *posa, int *posb)
 			if (b->arr[k % b->size] > a->arr[j % a->size]
 				&& b->arr[(k + 1) % b->size] < a->arr[j % a->size])
 			{
-				*posa = j % a->size;
-				*posb = (k + 1) % b->size;
+				values->posa = j % a->size;
+				values->posb = (k + 1) % b->size;
 				return ;
 			}
 			k++;
@@ -35,32 +35,30 @@ void	otherwise(t_stack *a, t_stack *b, int *posa, int *posb)
 	}
 }
 
-void	min_n_max(t_stack *b, int *min, int *max)
+void	min_n_max(t_stack *b, t_values *values)
 {
 	int	j;
 	int	k;
 
 	j = 0;
-	*min = 0;
+	values->min = 0;
 	while (++j < b->size)
-		if (b->arr[*min] > b->arr[j])
-			*min = j;
+		if (b->arr[values->min] > b->arr[j])
+			values->min = j;
 	k = 0;
-	*max = 0;
+	values->max = 0;
 	while (++k < b->size)
-		if (b->arr[*max] < b->arr[k])
-			*max = k;
+		if (b->arr[values->max] < b->arr[k])
+			values->max = k;
 }
 
-void	find_value(t_stack *a, t_stack *b, int *posa, int *posb)
+void	find_value(t_stack *a, t_stack *b, t_values *values)
 {
 	int	i;
 	int	j;
 	int	k;
-	int	min;
-	int	max;
 
-	min_n_max(b, &min, &max);
+	min_n_max(b, values);
 	i = 0;
 	while (i <= a->size / 2)
 	{
@@ -70,23 +68,23 @@ void	find_value(t_stack *a, t_stack *b, int *posa, int *posb)
 			k = b->size - i;
 			while (k < b->size + i)
 			{
-				if (a->arr[j % a->size] < b->arr[min % b->size])
+				if (a->arr[j % a->size] < b->arr[values->min % b->size])
 				{
-					*posa = j % a->size;
-					*posb = (min + 1) % b->size;
+					values->posa = j % a->size;
+					values->posb = (values->min + 1) % b->size;
 					return ;
 				}
-				if (a->arr[j % a->size] > b->arr[max % b->size])
+				if (a->arr[j % a->size] > b->arr[values->max % b->size])
 				{
-					*posa = j % a->size;
-					*posb = max % b->size;
+					values->posa = j % a->size;
+					values->posb = values->max % b->size;
 					return ;
 				}
 				if (b->arr[k % b->size] > a->arr[j % a->size]
 					&& b->arr[(k + 1) % b->size] < a->arr[j % a->size])
 				{
-					*posa = j % a->size;
-					*posb = (k + 1) % b->size;
+					values->posa = j % a->size;
+					values->posb = (k + 1) % b->size;
 					return ;
 				}
 				k++;
@@ -95,14 +93,13 @@ void	find_value(t_stack *a, t_stack *b, int *posa, int *posb)
 		}
 		i++;
 	}
-	otherwise(a, b, posa, posb);
+	otherwise(a, b, values);
 }
 
 void	organize_more(t_stack *a, t_stack *b)
 {
+	t_values values;
 	int	i;
-	int	posa;
-	int	posb;
 
 	pb(a, b);
 	pb(a, b);
@@ -110,9 +107,9 @@ void	organize_more(t_stack *a, t_stack *b)
 		sb(b);
 	while (a->size > 0)
 	{
-		find_value(a, b, &posa, &posb);
-		get_in_line(a, posa, 1);
-		get_in_line(b, posb, 2);
+		find_value(a, b, &values);
+		get_in_line(a, values.posa, 1);
+		get_in_line(b, values.posb, 2);
 		pb(a, b);
 	}
 	while (b->size > 0)
