@@ -12,6 +12,30 @@
 
 #include "../include/push_swap.h"
 
+int	what_if(t_stack *a, t_stack *b, t_values *values)
+{
+	if (a->arr[values->j % a->size] < b->arr[values->min % b->size])
+	{
+		values->posa = values->j % a->size;
+		values->posb = (values->min + 1) % b->size;
+		return (1);
+	}
+	if (a->arr[values->j % a->size] > b->arr[values->max % b->size])
+	{
+		values->posa = values->j % a->size;
+		values->posb = values->max % b->size;
+		return (1);
+	}
+	if (b->arr[values->k % b->size] > a->arr[values->j % a->size]
+		&& b->arr[(values->k + 1) % b->size] < a->arr[values->j % a->size])
+	{
+		values->posa = values->j % a->size;
+		values->posb = (values->k + 1) % b->size;
+		return (1);
+	}
+	return (0);
+}
+
 void	otherwise(t_stack *a, t_stack *b, t_values *values)
 {
 	int	j;
@@ -54,44 +78,24 @@ void	min_n_max(t_stack *b, t_values *values)
 
 void	find_value(t_stack *a, t_stack *b, t_values *values)
 {
-	int	i;
-	int	j;
-	int	k;
 
 	min_n_max(b, values);
-	i = 0;
-	while (i <= a->size / 2)
+	values->i = 0;
+	while (values->i <= a->size / 2)
 	{
-		j = a->size - i;
-		while (j < a->size + i)
+		values->j = a->size - values->i;
+		while (values->j < a->size + values->i)
 		{
-			k = b->size - i;
-			while (k < b->size + i)
+			values->k = b->size - values->i;
+			while (values->k < b->size + values->i)
 			{
-				if (a->arr[j % a->size] < b->arr[values->min % b->size])
-				{
-					values->posa = j % a->size;
-					values->posb = (values->min + 1) % b->size;
+				if (what_if(a, b, values))
 					return ;
-				}
-				if (a->arr[j % a->size] > b->arr[values->max % b->size])
-				{
-					values->posa = j % a->size;
-					values->posb = values->max % b->size;
-					return ;
-				}
-				if (b->arr[k % b->size] > a->arr[j % a->size]
-					&& b->arr[(k + 1) % b->size] < a->arr[j % a->size])
-				{
-					values->posa = j % a->size;
-					values->posb = (k + 1) % b->size;
-					return ;
-				}
-				k++;
+				values->k++;
 			}
-			j++;
+			values->j++;
 		}
-		i++;
+		values->i++;
 	}
 	otherwise(a, b, values);
 }

@@ -20,9 +20,12 @@
 typedef struct s_values
 {
 	int	min;
-	int max;
-	int posa;
-	int posb;
+	int	max;
+	int	posa;
+	int	posb;
+	int	i;
+	int	j;
+	int	k;
 }	t_values;
 
 typedef struct s_stack
