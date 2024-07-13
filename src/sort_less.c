@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   sort_less.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/25 11:49:31 by trischma          #+#    #+#             */
-/*   Updated: 2024/07/01 14:45:44 by trischma         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../include/push_swap.h"
 
 void	sort_rest(t_stack *a, t_stack *b)
@@ -39,31 +27,6 @@ void	sort_rest(t_stack *a, t_stack *b)
 		pa(a, b);
 }
 
-void	get_in_line(t_stack *ab, int posab, int x)
-{
-	while (posab != 0)
-	{
-		if (posab > ab->size / 2)
-		{
-			if (x == 1)
-				rra(ab);
-			else
-				rrb(ab);
-			posab++;
-			if (posab == ab->size)
-				posab = 0;
-		}
-		else
-		{
-			if (x == 1)
-				ra(ab);
-			else
-				rb(ab);
-			posab--;
-		}
-	}
-}
-
 int	is_sorted(t_stack *a, t_stack *b)
 {
 	int	i;
@@ -82,22 +45,14 @@ int	is_sorted(t_stack *a, t_stack *b)
 
 void	organize_less(t_stack *a, t_stack *b)
 {
-	int	i;
-	int	pos;
+	t_values	values;
 
 	while (!is_sorted(a, b))
 	{
 		while (a->size > 3)
 		{
-			i = 1;
-			pos = 0;
-			while (i < a->size)
-			{
-				if (a->arr[i] < a->arr[pos])
-					pos = i;
-				i++;
-			}
-			get_in_line(a, pos, 1);
+			find_min_n_max(a, &values);
+			get_in_line(a, values.max, 1);
 			pb(a, b);
 		}
 		sort_rest(a, b);

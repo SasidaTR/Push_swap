@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/03 14:11:59 by trischma          #+#    #+#             */
-/*   Updated: 2024/07/01 14:43:55 by trischma         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
@@ -34,7 +22,7 @@ typedef struct s_stack
 	int	size;
 }	t_stack;
 
-//Libft
+// libft
 int		ft_atoi(const char *str);
 int		ft_isdigit(const char *str);
 char	**ft_split(char const *s, char c);
@@ -42,6 +30,7 @@ char	*ft_strjoin(int argc, char **argv);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
 size_t	ft_strlen(const char *s);
 
+// utils
 void	sa(t_stack *a);
 void	sb(t_stack *b);
 void	ss(t_stack *a, t_stack *b);
@@ -54,9 +43,14 @@ void	rra(t_stack *a);
 void	rrb(t_stack *b);
 void	rrr(t_stack *a, t_stack *b);
 
+// src
 void	organize_less(t_stack *a, t_stack *b);
 void	organize_more(t_stack *a, t_stack *b);
 int		is_sorted(t_stack *a, t_stack *b);
-void	get_in_line(t_stack *ab, int posab, int x);
 void	sort_rest(t_stack *a, t_stack *b);
+
+void	find_min_n_max(t_stack *b, t_values *values);
+void	get_in_line(t_stack *ab, int posab, int x);
+void	push_back(t_stack *a, t_stack *b, t_values *values);
+void	find_value(t_stack *a, t_stack *b, t_values *values);
 #endif

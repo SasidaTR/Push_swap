@@ -1,16 +1,27 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   sort_more.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/26 11:35:17 by trischma          #+#    #+#             */
-/*   Updated: 2024/07/01 16:21:39 by trischma         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../include/push_swap.h"
+
+void	otherwise(t_stack *a, t_stack *b, t_values *values)
+{
+	int	j;
+	int	k;
+
+	j = 0;
+	while (j < a->size)
+	{
+		k = 0;
+		while (k < b->size)
+		{
+			if (b->arr[k % b->size] > a->arr[j % a->size]
+				&& b->arr[(k + 1) % b->size] < a->arr[j % a->size])
+			{
+				values->posa = j % a->size;
+				values->posb = (k + 1) % b->size;
+				return ;
+			}
+			k++;
+		}
+	}
+}
 
 int	what_if(t_stack *a, t_stack *b, t_values *values)
 {
@@ -36,50 +47,9 @@ int	what_if(t_stack *a, t_stack *b, t_values *values)
 	return (0);
 }
 
-void	otherwise(t_stack *a, t_stack *b, t_values *values)
-{
-	int	j;
-	int	k;
-
-	j = 0;
-	while (j < a->size)
-	{
-		k = 0;
-		while (k < b->size)
-		{
-			if (b->arr[k % b->size] > a->arr[j % a->size]
-				&& b->arr[(k + 1) % b->size] < a->arr[j % a->size])
-			{
-				values->posa = j % a->size;
-				values->posb = (k + 1) % b->size;
-				return ;
-			}
-			k++;
-		}
-	}
-}
-
-void	min_n_max(t_stack *b, t_values *values)
-{
-	int	j;
-	int	k;
-
-	j = 0;
-	values->min = 0;
-	while (++j < b->size)
-		if (b->arr[values->min] > b->arr[j])
-			values->min = j;
-	k = 0;
-	values->max = 0;
-	while (++k < b->size)
-		if (b->arr[values->max] < b->arr[k])
-			values->max = k;
-}
-
 void	find_value(t_stack *a, t_stack *b, t_values *values)
 {
-
-	min_n_max(b, values);
+	find_min_n_max(b, values);
 	values->i = 0;
 	while (values->i <= a->size / 2)
 	{
@@ -102,8 +72,8 @@ void	find_value(t_stack *a, t_stack *b, t_values *values)
 
 void	organize_more(t_stack *a, t_stack *b)
 {
-	t_values values;
-	int	i;
+	t_values	values;
+	int			i;
 
 	pb(a, b);
 	pb(a, b);
@@ -116,14 +86,15 @@ void	organize_more(t_stack *a, t_stack *b)
 		get_in_line(b, values.posb, 2);
 		pb(a, b);
 	}
-	while (b->size > 0)
-		pa(a, b);
+	push_back(a, b, &values);
 	i = 0;
 	while (a->arr[i] > a->arr[i + 1])
 		i++;
 	while (!is_sorted(a, b))
 		if (i < a->size / 2)
 			ra(a);
-	else
-		rra(a);
+		else
+			rra(a);
+	// while (*a->arr)
+	// 	printf("%d\n", *a->arr++);
 }
