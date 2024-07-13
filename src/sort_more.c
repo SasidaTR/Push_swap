@@ -95,6 +95,4 @@ void	organize_more(t_stack *a, t_stack *b)
 			ra(a);
 		else
 			rra(a);
-	// while (*a->arr)
-	// 	printf("%d\n", *a->arr++);
 }
