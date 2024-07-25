@@ -29,6 +29,7 @@ void	sort_rest(t_stack *a, t_stack *b)
 		{
 			sa(a);
 			ra(a);
+			sa(a);
 		}
 		else if (a->arr[0] < a->arr[2] && a->arr[1] > a->arr[2])
 			rra(a);
