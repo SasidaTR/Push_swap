@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sort_more.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/25 12:22:41 by trischma          #+#    #+#             */
+/*   Updated: 2024/07/25 12:22:42 by trischma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/push_swap.h"
 
 void	otherwise(t_stack *a, t_stack *b, t_values *values)
@@ -91,8 +103,10 @@ void	organize_more(t_stack *a, t_stack *b)
 	while (a->arr[i] > a->arr[i + 1])
 		i++;
 	while (!is_sorted(a, b))
+	{
 		if (i < a->size / 2)
 			ra(a);
 		else
 			rra(a);
+	}
 }

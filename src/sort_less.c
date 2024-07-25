@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sort_less.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/25 12:22:44 by trischma          #+#    #+#             */
+/*   Updated: 2024/07/25 12:22:45 by trischma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/push_swap.h"
 
 void	sort_rest(t_stack *a, t_stack *b)
@@ -52,7 +64,7 @@ void	organize_less(t_stack *a, t_stack *b)
 		while (a->size > 3)
 		{
 			find_min_n_max(a, &values);
-			get_in_line(a, values.max, 1);
+			get_in_line(a, values.min, 1);
 			pb(a, b);
 		}
 		sort_rest(a, b);

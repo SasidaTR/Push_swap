@@ -1,12 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   common.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/25 12:22:48 by trischma          #+#    #+#             */
+/*   Updated: 2024/07/25 12:22:49 by trischma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/push_swap.h"
 
 void	push_back(t_stack *a, t_stack *b, t_values *values)
 {
 	values->i = 0;
 	while (b->size > 0)
-	{
 		pa(a, b);
-	}
 }
 
 void	get_in_line(t_stack *x, int posx, int a_or_b)
