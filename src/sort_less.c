@@ -25,14 +25,13 @@ void	sort_rest(t_stack *a, t_stack *b)
 			ra(a);
 		else if (a->arr[0] > a->arr[1])
 			sa(a);
+		else if (a->arr[0] > a->arr[2] && a->arr[1] > a->arr[2])
+			rra(a);
 		else if (a->arr[1] > a->arr[2])
 		{
 			sa(a);
 			ra(a);
-			sa(a);
 		}
-		else if (a->arr[0] < a->arr[2] && a->arr[1] > a->arr[2])
-			rra(a);
 	}
 	else if (a->size == 2 && a->arr[0] > a->arr[1])
 		sa(a);

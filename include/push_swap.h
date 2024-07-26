@@ -38,6 +38,7 @@ typedef struct s_stack
 int		ft_atoi(const char *str);
 int		ft_isdigit(const char *str);
 char	**ft_split(char const *s, char c);
+int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strjoin(int argc, char **argv);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
 size_t	ft_strlen(const char *s);
